@@ -3,19 +3,17 @@ package com.uwebs.demo.action;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.json.annotations.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
+import net.sf.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.uwebs.demo.model.RES_VIPCUSTOMER;
-import com.uwebs.demo.service.UserServiceI;
-import com.uwebs.demo.service.impl.VipCustomerServiceImpl;
+import com.uwebs.demo.service.VipCustomerServiceImpl;
 
-@Action(value = "VipCustomerAction")
-@ParentPackage("basePackage")
-@Namespace("/")
+//@Action(value = "VipCustomerAction")
+//@ParentPackage("basePackage")
+//@Namespace("/")
 public class VipCustomerAction extends ActionSupport {
 	private static final long serialVersionUID = 6872366878758961847L;
 	private List<RES_VIPCUSTOMER> mapList;
@@ -38,8 +36,35 @@ public class VipCustomerAction extends ActionSupport {
 	}
 
 	public String list() {
-		System.out.println("list");
+		return SUCCESS;
+	}
+
+	private JSONObject listResult;
+
+	public JSONObject getListResult() {
+		return listResult;
+	}
+
+	public void setListResult(JSONObject listResult) {
+		this.listResult = listResult;
+	}
+	
+	@JSON(format="yyyy-MM-dd HH:mm:ss")
+	public String getlistjson() {
 		mapList = vipCustomerService.get_list();
+		// System.out.println(jsonArray);
+
+		Integer total = mapList.size();
+
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("total", total);
+		jsonObject.put("rows", mapList);
+		// HttpServletResponse response = ServletActionContext.getResponse();
+		// PrintWriter out =response.getWriter();
+		// out.print(jsonObject);
+		listResult = JSONObject.fromObject(jsonObject);
+		// listResult = jsonArray.toString();
+
 		return SUCCESS;
 	}
 

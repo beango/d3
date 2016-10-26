@@ -30,15 +30,24 @@
 	<package name="basePackage" extends="struts-default">
 	</package>
 
-	<package name="hs" extends="struts-default">
-		<action name="test" class="com.uwebs.demo.action.TestAction">
-			<result>/index.jsp</result>
+	<package name="d3.Home" extends="struts-default">
+		<action name="index" class="com.uwebs.demo.action.HomeAction">
+			<result>/home.jsp</result>
 		</action>
 	</package>
-	<package name="d3.VIPCUSTOMER" namespace="/RES_VIPCUSTOMER" extends="struts-default">
+	<package name="d3.VIPCUSTOMER" namespace="/RES_VIPCUSTOMER"
+		extends="json-default">
 		<action name="list" class="com.uwebs.demo.action.VipCustomerAction"
 			method="list">
 			<result>/RES/list.jsp</result>
+		</action>
+		<action name="getlistjson" class="com.uwebs.demo.action.VipCustomerAction" method="getlistjson">
+			<result type="json">
+				<param name="root">listResult</param>
+				<param name="callbackParameter">jsoncallback</param>
+				<!-- tmd 强烈不建议使用includeProperties。如果只是返回json字符串可以，如果返回json对象。那些include表达式能把你弄死。不信就跟踪源码试试 -->
+				<!-- <param name="excludeProperties">godPositionService,godPosition,godPositionList</param> -->
+			</result>
 		</action>
 		<action name="add" class="com.uwebs.demo.action.VipCustomerAction"
 			method="add">

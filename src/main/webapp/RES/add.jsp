@@ -5,13 +5,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/Resources/easyui/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/Resources/easyui/themes/icon.css" />
 </head>
 <body>
-<s:form action="save" >
-        <s:textfield name="customer.pkid" label="pkid" />
-        <s:textfield name="customer.resId" label="resid" />
-        <s:textfield name="customer.mobile" label="mobile" />
-        <s:submit />
-    </s:form>
+	<s:form action="save">
+		<s:textfield name="customer.pkid" label="pkid" />
+		<s:textfield name="customer.resId" label="resid" />
+		<s:textfield name="customer.mobile" label="mobile" />
+		<s:submit />
+	</s:form>
 </body>
 </html>

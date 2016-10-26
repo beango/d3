@@ -79,12 +79,8 @@
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-core</artifactId>
 			<version>2.3.16</version>
-			<!-- <exclusions>
-				<exclusion>
-					<groupId>javassist</groupId>
-					<artifactId>javassist</artifactId>
-				</exclusion>
-			</exclusions> -->
+			<!-- <exclusions> <exclusion> <groupId>javassist</groupId> <artifactId>javassist</artifactId> 
+				</exclusion> </exclusions> -->
 			<!-- 这里的 exclusions 是排除包，因为 Struts2中有javassist，Hibernate中也有javassist, 
 				所以如果要整合Hibernate，一定要排除掉Struts2中的javassist，否则就冲突了。 <exclusions> <exclusion> 
 				<groupId>javassist</groupId> <artifactId>javassist</artifactId> </exclusion> 
@@ -140,15 +136,45 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>5.2.3.Final</version><!-- 3.6.10.Final -->
 		</dependency>
-		<!-- <dependency>
-			<groupId>com.mchange</groupId>
-			<artifactId>mchange-commons-java</artifactId>
-			<version>0.2.12</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>com.mchange</groupId> <artifactId>mchange-commons-java</artifactId> 
+			<version>0.2.12</version> </dependency> -->
 		<dependency>
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
 			<version>1.6</version>
+		</dependency>
+		<!-- Struts2 tag -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<!-- JSON -->
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-json-plugin</artifactId>
+			<version>2.3.30</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.3</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.ezmorph</groupId>
+			<artifactId>ezmorph</artifactId>
+			<version>1.0.6</version>
 		</dependency>
 
 	</dependencies>

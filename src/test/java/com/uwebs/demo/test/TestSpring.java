@@ -6,7 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.opensymphony.xwork2.interceptor.annotations.Before;
 import com.uwebs.demo.service.UserServiceI;
-import com.uwebs.demo.service.impl.VipCustomerServiceI;
+import com.uwebs.demo.service.VipCustomerServiceI;
 
 public class TestSpring {
 

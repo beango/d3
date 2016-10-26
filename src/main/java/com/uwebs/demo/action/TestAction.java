@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.opensymphony.xwork2.ActionSupport;
 
 import com.uwebs.demo.service.UserServiceI;
-import com.uwebs.demo.service.impl.VipCustomerServiceI;
+import com.uwebs.demo.service.VipCustomerServiceI;
 
 @ParentPackage("basePackage")
 @Action(value="strust2Test")
