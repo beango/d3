@@ -1,47 +1,43 @@
 package com.uwebs.demo.service.impl;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.uwebs.demo.model.RES_VIPCUSTOMER;
 
+//@Transactional
 @Service("vipCustomerService")
 public class VipCustomerServiceImpl implements VipCustomerServiceI {
-	
+
 	@Autowired
-    private SessionFactory sessionFactory;
-	
-    /*@Resource
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}*/
-	
+	private SessionFactory sessionFactory;
+
+	/*
+	 * @Resource public void setSessionFactory(SessionFactory sessionFactory) {
+	 * this.sessionFactory = sessionFactory; } public SessionFactory
+	 * getSessionFactory() { return sessionFactory; }
+	 */
+
 	public List<RES_VIPCUSTOMER> get_list() {
 		Session session = sessionFactory.openSession();
 
 		@SuppressWarnings("unchecked")
 		List<RES_VIPCUSTOMER> personList = session.createQuery("select p from RES_VIPCUSTOMER p").list();
-		
+
 		return personList;
 	}
 
-	
 	public RES_VIPCUSTOMER get(Integer pkid) {
 		Session session = sessionFactory.openSession();
-		
-		Query query = session.createQuery("from RES_VIPCUSTOMER where pkid=:pkid");  
+
+		Query query = session.createQuery("from RES_VIPCUSTOMER where pkid=:pkid");
 		query.setParameter("pkid", pkid);
 		List<RES_VIPCUSTOMER> customers = query.list();
 		if (customers != null && customers.size() > 0) {
@@ -68,7 +64,7 @@ public class VipCustomerServiceImpl implements VipCustomerServiceI {
 		session.update(old);
 		tx.commit();
 	}
-	
+
 	public void delete(Integer pkid) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();

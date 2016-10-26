@@ -9,13 +9,13 @@
 </head>
 <body>
 	<h2>Hello World!</h2>
-	<a href="<s:url value="/RES_VIPCUSTOMER/add.action" />">add</a>
+	<a href="<s:url value="/RES_VIPCUSTOMER/add" />">add</a>
 	<ul>
 		<s:iterator value="mapList">
 			<li>资源ＩＤ：<s:property value="resId" /> 号码：<s:property
 					value="mobile" /> <a
-				href="<s:url value="/RES/add?pkid=%{pkid}"  />">edit</a>
-				<a href="<s:url value="/RES/delete?pkid=%{pkid}"  />">delete</a></li>
+				href="<s:url value="/RES_VIPCUSTOMER/add?pkid=%{pkid}"  />">edit</a>
+				<a href="<s:url value="/RES_VIPCUSTOMER/delete?pkid=%{pkid}"  />">delete</a></li>
 
 		</s:iterator>
 	</ul>

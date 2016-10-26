@@ -52,7 +52,7 @@ public class VipCustomerAction extends ActionSupport {
 	}
 
 	public String save() {
-		RES_VIPCUSTOMER old = null;// bl.get(customer.getPkid());
+		RES_VIPCUSTOMER old = vipCustomerService.get(customer.getPkid());
 		if (old != null) {
 			vipCustomerService.update(customer);
 		} else {
