@@ -89,8 +89,23 @@ public class VipCustomerAction extends ActionSupport {
 	}
 
 	public String delete() {
-		vipCustomerService.delete(pkid);
-		return SUCCESS;
+		if(pkid == null)
+		{
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("success", false);
+			jsonObject.put("errorMsg", "系统错误！");
+			listResult = JSONObject.fromObject(jsonObject);
+			return SUCCESS;
+		}
+		else
+		{
+			vipCustomerService.delete(pkid);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("success", true);
+			jsonObject.put("errorMsg", "删除成功！");
+			listResult = JSONObject.fromObject(jsonObject);
+			return SUCCESS;
+		}
 	}
 
 	/**

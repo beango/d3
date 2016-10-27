@@ -28,7 +28,7 @@
 			href="javascript:void(0)" class="easyui-linkbutton"
 			iconCls="icon-edit" plain="true" onclick="edit()">Edit</a> <a
 			href="javascript:void(0)" class="easyui-linkbutton"
-			iconCls="icon-remove" plain="true" onclick="remove()">Remove</a>
+			iconCls="icon-remove" plain="true" onclick="deleteentity()">Remove</a>
 	</div>
 	<table id="dg" class="easyui-datagrid" title="Basic DataGrid"
 		style="width: 100%; height: 100%"
@@ -46,31 +46,6 @@
 		</thead>
 	</table>
 
-	<div id="dlg" class="easyui-dialog" style="width: 400px" closed="true"
-		buttons="#dlg-buttons">
-		<form id="fm" method="post" novalidate
-			style="margin: 0; padding: 20px 50px">
-			<div
-				style="margin-bottom: 20px; font-size: 14px; border-bottom: 1px solid #ccc">User
-				Information</div>
-			<div style="margin-bottom: 10px">
-				<input name="firstname" class="easyui-textbox" required="true"
-					label="First Name:" style="width: 100%">
-			</div>
-			<div style="margin-bottom: 10px">
-				<input name="lastname" class="easyui-textbox" required="true"
-					label="Last Name:" style="width: 100%">
-			</div>
-			<div style="margin-bottom: 10px">
-				<input name="phone" class="easyui-textbox" required="true"
-					label="Phone:" style="width: 100%">
-			</div>
-			<div style="margin-bottom: 10px">
-				<input name="email" class="easyui-textbox" required="true"
-					validType="email" label="Email:" style="width: 100%">
-			</div>
-		</form>
-	</div>
 	<script type="text/javascript">
 		function add() {
 			var url = '<s:url value="/RES_VIPCUSTOMER/add" />';
@@ -80,10 +55,30 @@
 		function edit(){
             var row = $('#dg').datagrid('getSelected');
             if (row){
-            	var url = '<s:url value="/RES_VIPCUSTOMER/edit?pkid=" />' + row.pkid;
+            	var url = '<s:url value="/RES_VIPCUSTOMER/add?pkid=" />' + row.pkid;
     			OpenDialog('增加', url);
             }
         }
+		
+		function deleteentity(){
+            var row = $('#dg').datagrid('getSelected');
+            if (row){
+                $.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
+                    if (r){
+                        $.post('<s:url value="/RES_VIPCUSTOMER/delete" />',{pkid:row.pkid},function(result){
+                            if (result.success){
+                                $('#dg').datagrid('reload');    // reload the user data
+                            } else {
+                                $.messager.show({    // show error message
+                                    title: 'Error',
+                                    msg: result.errorMsg
+                                });
+                            }
+                        },'json');
+                    }
+                });
+            }
+		}
 		
 		function OpenDialog(title, url) {
 			$("#div_Info").remove();

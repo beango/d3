@@ -59,7 +59,9 @@
 		</action>
 		<action name="delete" class="com.uwebs.demo.action.VipCustomerAction"
 			method="delete">
-			<result type="redirect">list</result>
+			<result name="success" type="json">
+				<param name="root">listResult</param>
+			</result>
 		</action>
 	</package>
 </struts>
