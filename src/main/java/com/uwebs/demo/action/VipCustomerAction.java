@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.uwebs.demo.model.RES_VIPCUSTOMER;
+import com.uwebs.demo.model.RES_VIPCUSTOMER_MAP;
 import com.uwebs.demo.service.VipCustomerServiceImpl;
 
 //@Action(value = "VipCustomerAction")
@@ -17,6 +18,7 @@ import com.uwebs.demo.service.VipCustomerServiceImpl;
 public class VipCustomerAction extends ActionSupport {
 	private static final long serialVersionUID = 6872366878758961847L;
 	private List<RES_VIPCUSTOMER> mapList;
+	private List<RES_VIPCUSTOMER_MAP> mapList2;
 	private RES_VIPCUSTOMER customer;
 	private Integer pkid;
 
@@ -51,20 +53,13 @@ public class VipCustomerAction extends ActionSupport {
 	
 	@JSON(format="yyyy-MM-dd HH:mm:ss")
 	public String getlistjson() {
-		mapList = vipCustomerService.get_list();
-		// System.out.println(jsonArray);
-
-		Integer total = mapList.size();
+		mapList2 = vipCustomerService.get_list2();
+		Integer total = mapList2.size();
 
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("total", total);
-		jsonObject.put("rows", mapList);
-		// HttpServletResponse response = ServletActionContext.getResponse();
-		// PrintWriter out =response.getWriter();
-		// out.print(jsonObject);
+		jsonObject.put("rows", mapList2);
 		listResult = JSONObject.fromObject(jsonObject);
-		// listResult = jsonArray.toString();
-
 		return SUCCESS;
 	}
 
@@ -129,5 +124,13 @@ public class VipCustomerAction extends ActionSupport {
 
 	public void setCustomer(RES_VIPCUSTOMER customerBean) {
 		this.customer = customerBean;
+	}
+
+	public List<RES_VIPCUSTOMER_MAP> getMapList2() {
+		return mapList2;
+	}
+
+	public void setMapList2(List<RES_VIPCUSTOMER_MAP> mapList2) {
+		this.mapList2 = mapList2;
 	}
 }

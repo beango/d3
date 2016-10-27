@@ -14,6 +14,7 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.uwebs.demo.model.RES_VIPCUSTOMER;
+import com.uwebs.demo.model.RES_VIPCUSTOMER_MAP;
 
 //@Transactional
 @Service("vipCustomerService")
@@ -29,13 +30,27 @@ public class VipCustomerServiceImpl implements VipCustomerServiceI {
 		List<RES_VIPCUSTOMER> list = null;
 
 		try {
-			list = sqlMapClient.queryForList("selectAllCustomers");
+			list = sqlMapClient.queryForList("selectVipCustomer");
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		return list;
 	}
 
+	public List<RES_VIPCUSTOMER_MAP> get_list2() {
+		List<RES_VIPCUSTOMER_MAP> list = null;
+
+		try {
+			list = sqlMapClient.queryForList("selectVipCustomer2");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return list;
+	}
+	
 	public RES_VIPCUSTOMER get(Integer pkid) {
 		RES_VIPCUSTOMER c = null;
 		try {

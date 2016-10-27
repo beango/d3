@@ -4,12 +4,17 @@
 <sqlMap>
     <typeAlias alias="RES_VIPCUSTOMER" type="com.uwebs.demo.model.RES_VIPCUSTOMER" />
     
-     <resultMap class="RES_VIPCUSTOMER" id="UserResult">    
+     <resultMap id="UserResult" class="RES_VIPCUSTOMER">    
         <result property="pkid" column="PKID"/>
         <result property="resId" column="RESID"/>
         <result property="mobile" column="MOBILE"/>
         <result property="ctime" column="CTIME"/>
     </resultMap>  
+    
+    <!-- <resultMap id="RES_VIPSCUSTOMERMAP" class="RES_VIPCUSTOMER">
+    	<association property="userInfo" column="user_info_id" columnPrefix="user_info_" resultMap="UserResult"/>
+    	<result property="customerfrom" column="customerfrom"/>
+    </resultMap> -->
     
     <!-- query all Users -->    
     <select id="selectAllCustomers" resultMap="UserResult">    
@@ -39,4 +44,11 @@
         RES_VIPCUSTOMER
 		where pkid = #pkid#
     </insert>
+    
+    <select id="selectVipCustomer2" resultClass="com.uwebs.demo.model.RES_VIPCUSTOMER_MAP">
+		select t1.pkid, t1.resId, t1.mobile, t1.ctime, t2.customerFrom
+		from res_vipcustomer t1 left join res_customer t2 on t1.resid=t2.resid
+	</select>
+	
+	<sql id="columns">pkid, resId, mobile</sql>
 </sqlMap>
