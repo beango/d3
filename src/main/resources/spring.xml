@@ -87,6 +87,17 @@
 		<property name="filters" value="mergeStat" />
 	</bean>
 
+	<!-- 配置iBatis的sqlMapClient，这里当然是交给了spring去处理,其中，将SqlMapConfig文件放到了WEB-INF的iBatis目录下，也是便于管理 -->
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<value>/WEB-INF/iBatis/SqlMapConfig.xml</value>
+		</property>
+		<!-- 这里使用的数据源就是上面配置的数据源 -->
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
@@ -113,8 +124,6 @@
 			<tx:method name="*" propagation="REQUIRED" read-only="true" />
 		</tx:attributes>
 	</tx:advice>
-
-	<context:component-scan
-		base-package="com.uwebs.demo.dao, com.uwebs.demo.service">
-	</context:component-scan>
+	
+	<context:component-scan base-package="com.uwebs.demo.dao, com.uwebs.demo.service" />
 </beans>

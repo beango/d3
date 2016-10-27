@@ -1,5 +1,6 @@
 package com.uwebs.demo.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -9,67 +10,65 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
+import com.ibatis.sqlmap.client.SqlMapClient;
 import com.uwebs.demo.model.RES_VIPCUSTOMER;
 
 //@Transactional
 @Service("vipCustomerService")
 public class VipCustomerServiceImpl implements VipCustomerServiceI {
 
-	@Autowired
-	private SessionFactory sessionFactory;
+	//@Autowired
+	//private SessionFactory sessionFactory;
 
-	/*
-	 * @Resource public void setSessionFactory(SessionFactory sessionFactory) {
-	 * this.sessionFactory = sessionFactory; } public SessionFactory
-	 * getSessionFactory() { return sessionFactory; }
-	 */
+	@Autowired
+	private SqlMapClient sqlMapClient;
 
 	public List<RES_VIPCUSTOMER> get_list() {
-		Session session = sessionFactory.openSession();
+		List<RES_VIPCUSTOMER> list = null;
 
-		@SuppressWarnings("unchecked")
-		List<RES_VIPCUSTOMER> personList = session.createQuery("select p from RES_VIPCUSTOMER p").list();
-
-		return personList;
+		try {
+			list = sqlMapClient.queryForList("selectAllCustomers");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	public RES_VIPCUSTOMER get(Integer pkid) {
-		Session session = sessionFactory.openSession();
-
-		Query query = session.createQuery("from RES_VIPCUSTOMER where pkid=:pkid");
-		query.setParameter("pkid", pkid);
-		List<RES_VIPCUSTOMER> customers = query.list();
-		if (customers != null && customers.size() > 0) {
-			return customers.get(0);
+		RES_VIPCUSTOMER c = null;
+		try {
+			c = (RES_VIPCUSTOMER) sqlMapClient.queryForObject("selectVipCustomerById", pkid);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return null;
+		return c;
 	}
 
 	public void save(RES_VIPCUSTOMER model) {
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		session.save(model);
-		tx.commit();
+		try {
+			this.sqlMapClient.insert("insertVipCustomer", model);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void update(RES_VIPCUSTOMER model) {
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		RES_VIPCUSTOMER old = get(model.getPkid());
-		old.setResId(model.getResId());
-		old.setMobile(model.getMobile());
-		old.setReason(model.getReason());
-		old.setCtime(old.getCtime());
-		session.update(old);
-		tx.commit();
+		try {
+			Integer object = sqlMapClient.update("updateVipCustomer", model);
+			System.out.println("返回值：" + object);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void delete(Integer pkid) {
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		RES_VIPCUSTOMER model = get(pkid);
-		session.delete(model);
-		tx.commit();
+		try {
+			Integer object = sqlMapClient.delete("deleteVipCustomer", pkid);
+			System.out.println("删除学生信息的返回值：" + object + "，这里返回的是影响的行数");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

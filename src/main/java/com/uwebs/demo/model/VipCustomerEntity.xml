@@ -5,10 +5,10 @@
     <typeAlias alias="RES_VIPCUSTOMER" type="com.uwebs.demo.model.RES_VIPCUSTOMER" />
     
      <resultMap class="RES_VIPCUSTOMER" id="UserResult">    
-        <result property="pkid" column="PKID"/>        
-        <result property="resId" column="RESID"/>      
-        <result property="mobile" column="MOBILE"/>       
-        <result property="ctime" column="CTIME"/>       
+        <result property="pkid" column="PKID"/>
+        <result property="resId" column="RESID"/>
+        <result property="mobile" column="MOBILE"/>
+        <result property="ctime" column="CTIME"/>
     </resultMap>  
     
     <!-- query all Users -->    
@@ -16,9 +16,27 @@
         select * from RES_VIPCUSTOMER     
     </select>  
     
+    <select id="selectVipCustomerById" parameterClass="Integer" resultClass="RES_VIPCUSTOMER">
+		select * from RES_VIPCUSTOMER where pkid=#pkid#
+	</select>
+
     <!-- 保存注册信息 -->
     <insert id="insertVipCustomer" parameterClass="RES_VIPCUSTOMER">
         insert into
-        RES_VIPCUSTOMER(pkid,resid,mobile,ctime)values(#pkid#,#resid#,#mobile#,#ctime#)
+        RES_VIPCUSTOMER(pkid,resId,mobile,ctime,reason)values(#pkid#,#resId#,#mobile#,#ctime#,#reason#)
+    </insert>
+    
+    <!-- 保存注册信息 -->
+    <insert id="updateVipCustomer" parameterClass="RES_VIPCUSTOMER">
+        update
+        RES_VIPCUSTOMER
+        set resId=#resId#,mobile=#mobile#,reason=#reason#
+		where pkid = #pkid#
+    </insert>
+    
+    <insert id="deleteVipCustomer" parameterClass="Integer">
+        delete
+        RES_VIPCUSTOMER
+		where pkid = #pkid#
     </insert>
 </sqlMap>
