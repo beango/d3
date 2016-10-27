@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+    <typeAlias alias="RES_VIPCUSTOMER" type="com.uwebs.demo.model.RES_VIPCUSTOMER" />
+    
+     <resultMap class="RES_VIPCUSTOMER" id="UserResult">    
+        <result property="pkid" column="PKID"/>        
+        <result property="resId" column="RESID"/>      
+        <result property="mobile" column="MOBILE"/>       
+        <result property="ctime" column="CTIME"/>       
+    </resultMap>  
+    
+    <!-- query all Users -->    
+    <select id="selectAllCustomers" resultMap="UserResult">    
+        select * from RES_VIPCUSTOMER     
+    </select>  
+    
+    <!-- 保存注册信息 -->
+    <insert id="insertVipCustomer" parameterClass="RES_VIPCUSTOMER">
+        insert into
+        RES_VIPCUSTOMER(pkid,resid,mobile,ctime)values(#pkid#,#resid#,#mobile#,#ctime#)
+    </insert>
+</sqlMap>
