@@ -35,11 +35,11 @@
 		data-options="singleSelect:true,collapsible:true,url:'<s:url value="/RES_VIPCUSTOMER/getlistjson" />',method:'get'">
 		<thead>
 			<tr>
-				<th data-options="field:'pkid',width:80">pkid</th>
-				<th data-options="field:'resId',width:100">resId</th>
-				<th data-options="field:'mobile',width:80,align:'right'">mobile</th>
-				<th data-options="field:'reason',width:80,align:'right'">reason</th>
-				<th data-options="field:'ctime',width:250"
+				<th data-options="field:'pkid'">pkid</th>
+				<th data-options="field:'resId'">resId</th>
+				<th data-options="field:'mobile',align:'right'">mobile</th>
+				<th data-options="field:'reason',align:'right'">reason</th>
+				<th data-options="field:'ctime'"
 					formatter="Common.ToLocal">ctime</th>
 
 			</tr>

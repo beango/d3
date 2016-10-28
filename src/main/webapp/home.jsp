@@ -27,13 +27,19 @@
 		<div data-options="region:'north'" style="height: 50px"></div>
 		<div id="p" data-options="region:'west'" title="West"
 			style="width: 20%; padding: 10px">
-			<p>width: 30%</p>
+			<div class="easyui-panel" style="padding: 5px">
+				<%-- <ul class="easyui-tree"
+					data-options="url:'<%=request.getContextPath()%>/leftMenuList',method:'get',animate:true"></ul> --%>
+				<ul id="MyTree"></ul>
+			</div>
 		</div>
-		<div data-options="region:'center'" title="Center" noheader="true" border="false">
+		<div data-options="region:'center'" title="Center" noheader="true"
+			border="false">
 			<div class="easyui-tabs" id="tt" style="width: 100%; height: 100%">
 				<div title="About" style="padding: 0">
-					<p>WELCOM.
-					<a href="#" onclick="tabAdd('VIPCUSTOMER', '<%=request.getContextPath()%>/RES_VIPCUSTOMER/list');">ADDTAB</a>
+					<p>
+						WELCOM. <a href="#"
+							onclick="tabAdd('VIP_CUSTOMER', '<%=request.getContextPath()%>/RES_VIPCUSTOMER/list');">ADDTAB</a>
 					</p>
 				</div>
 			</div>
@@ -43,6 +49,14 @@
 		$(function() {
 			setTabs();
 		});
+		$(document).ready(function() {
+			$("#MyTree").tree({
+				url : "<%=request.getContextPath()%>/leftMenuList?parentid=0",
+				onClick:function(node){
+					tabAdd(node.text, node.url);
+	          }
+			});
+		});
 		function setTabs() {
 			$('#tt').tabs({
 				plain : false,
@@ -51,25 +65,26 @@
 				justified : false
 			})
 		}
-		function tabAdd(title, href, icon)
-		{
-			var tt = $('#tt');  
-			if (tt.tabs('exists', title)){//如果tab已经存在,则选中并刷新该tab          
-		        tt.tabs('select', title);  
-		        //refreshTab({tabTitle:title,url:href});  
-		    } else {  
-		        if (href){  
-		            var content = '<iframe scrolling="no" frameborder="0"  src="'+href+'" style="width:100%;height:100%;"></iframe>';  
-		        } else {  
-		            var content = '未实现';  
-		        }  
-		        tt.tabs('add',{  
-		            title:title,  
-		            closable:true,  
-		            content:content,  
-		            iconCls:icon||'icon-default'  
-		        });  
-		    }  
+
+		function tabAdd(title, href, icon) {
+			var tt = $('#tt');
+			if (tt.tabs('exists', title)) {//如果tab已经存在,则选中并刷新该tab          
+				tt.tabs('select', title);
+				//refreshTab({tabTitle:title,url:href});  
+			} else {
+				if (href) {
+					var content = '<iframe scrolling="no" frameborder="0"  src="'
+							+ href
+							+ '" style="width:100%;height:100%;"></iframe>';
+				} else {
+					var content = '未实现';
+				}
+				tt.tabs('add', {
+					title : title,
+					closable : true,
+					content : content
+				});
+			}
 		}
 		/**     
 		 * 刷新tab 
@@ -77,16 +92,17 @@
 		 *example: {tabTitle:'tabTitle',url:'refreshUrl'} 
 		 *如果tabTitle为空，则默认刷新当前选中的tab 
 		 *如果url为空，则默认以原来的url进行reload 
-		 */  
-		function refreshTab(cfg){  
-		    var refresh_tab = cfg.tabTitle?$('#tt').tabs('getTab',cfg.tabTitle):$('#tt').tabs('getSelected');  
-		    if(refresh_tab && refresh_tab.find('iframe').length > 0){  
-		    var _refresh_ifram = refresh_tab.find('iframe')[0];  
-		    var refresh_url = cfg.url?cfg.url:_refresh_ifram.src;  
-		    //_refresh_ifram.src = refresh_url;  
-		    _refresh_ifram.contentWindow.location.href=refresh_url;  
-		    }  
-		}  
+		 */
+		function refreshTab(cfg) {
+			var refresh_tab = cfg.tabTitle ? $('#tt').tabs('getTab',
+					cfg.tabTitle) : $('#tt').tabs('getSelected');
+			if (refresh_tab && refresh_tab.find('iframe').length > 0) {
+				var _refresh_ifram = refresh_tab.find('iframe')[0];
+				var refresh_url = cfg.url ? cfg.url : _refresh_ifram.src;
+				//_refresh_ifram.src = refresh_url;  
+				_refresh_ifram.contentWindow.location.href = refresh_url;
+			}
+		}
 	</script>
 </body>
 </html>

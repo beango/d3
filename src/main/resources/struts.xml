@@ -30,9 +30,12 @@
 	<package name="basePackage" extends="struts-default">
 	</package>
 
-	<package name="d3.Home" extends="struts-default">
+	<package name="d3.Home" extends="json-default">
 		<action name="index" class="com.uwebs.demo.action.HomeAction">
 			<result>/home.jsp</result>
+		</action>
+		<action name="leftMenuList" class="com.uwebs.demo.action.HomeAction" method="leftMenuList">
+			
 		</action>
 	</package>
 	<package name="d3.VIPCUSTOMER" namespace="/RES_VIPCUSTOMER"
