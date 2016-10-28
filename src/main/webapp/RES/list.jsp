@@ -30,7 +30,7 @@
 			href="javascript:void(0)" class="easyui-linkbutton"
 			iconCls="icon-remove" plain="true" onclick="deleteentity()">Remove</a>
 	</div>
-	<table id="dg" class="easyui-datagrid" title="Basic DataGrid"
+	<table id="dg" class="easyui-datagrid" title="Basic DataGrid" noheader="true"
 		style="width: 100%; height: 100%"
 		data-options="singleSelect:true,collapsible:true,url:'<s:url value="/RES_VIPCUSTOMER/getlistjson" />',method:'get'">
 		<thead>
@@ -39,49 +39,69 @@
 				<th data-options="field:'resId'">resId</th>
 				<th data-options="field:'mobile',align:'right'">mobile</th>
 				<th data-options="field:'reason',align:'right'">reason</th>
-				<th data-options="field:'ctime'"
-					formatter="Common.ToLocal">ctime</th>
+				<th data-options="field:'ctime'" formatter="Common.ToLocal">ctime</th>
 
 			</tr>
 		</thead>
 	</table>
-
+	<div id="dlg" class="easyui-window" closed="true" modal="true"
+		title="Example" style="width: 500px; height: 350px;">
+		<iframe scrolling="auto" id='dliframe' frameborder="0" src=""
+			style="width: 100%; height: 100%;"></iframe>
+	</div>
 	<script type="text/javascript">
 		function add() {
 			var url = '<s:url value="/RES_VIPCUSTOMER/add" />';
 			OpenDialog('增加', url);
 		}
-		
-		function edit(){
-            var row = $('#dg').datagrid('getSelected');
-            if (row){
-            	var url = '<s:url value="/RES_VIPCUSTOMER/add?pkid=" />' + row.pkid;
-    			OpenDialog('增加', url);
-            }
-        }
-		
-		function deleteentity(){
-            var row = $('#dg').datagrid('getSelected');
-            if (row){
-                $.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
-                    if (r){
-                        $.post('<s:url value="/RES_VIPCUSTOMER/delete" />',{pkid:row.pkid},function(result){
-                            if (result.success){
-                                $('#dg').datagrid('reload');    // reload the user data
-                            } else {
-                                $.messager.show({    // show error message
-                                    title: 'Error',
-                                    msg: result.errorMsg
-                                });
-                            }
-                        },'json');
-                    }
-                });
-            }
+
+		function edit() {
+			var row = $('#dg').datagrid('getSelected');
+			if (row) {
+				var url = '<s:url value="/RES_VIPCUSTOMER/add?pkid=" />'
+						+ row.pkid;
+				OpenDialog('增加', url);
+			}
 		}
-		
-		function OpenDialog(title, url) {
-			$("#div_Info").remove();
+
+		function deleteentity() {
+			var row = $('#dg').datagrid('getSelected');
+			if (row) {
+				$.messager
+						.confirm(
+								'Confirm',
+								'Are you sure you want to destroy this user?',
+								function(r) {
+									if (r) {
+										$
+												.post(
+														'<s:url value="/RES_VIPCUSTOMER/delete" />',
+														{
+															pkid : row.pkid
+														},
+														function(result) {
+															if (result.success) {
+																$('#dg')
+																		.datagrid(
+																				'reload'); // reload the user data
+															} else {
+																$.messager
+																		.show({ // show error message
+																			title : 'Error',
+																			msg : result.errorMsg
+																		});
+															}
+														}, 'json');
+									}
+								});
+			}
+		}
+		function OpenDialog(title, url){
+			$('#dliframe')[0].src=url;
+			$('#dlg').dialog('open');
+			$('#dlg').panel({title: title});
+		}
+		function OpenDialog1(title, url) {
 			var div = $("<div id='div_Info' title='"+title+"'></div>")
 					.appendTo($("BODY"));
 			var content = div.load(url, {});

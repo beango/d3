@@ -19,7 +19,7 @@
 </head>
 <body>
 	<div class="easyui-panel" title="New Topic"
-		style="width: 100%; max-width: 400px; padding: 30px 60px;">
+		style="width: 100%; max-width: 400px; padding: 30px 60px;" noheader="true" border="false">
 		<s:form id="ff" action="save" theme="simple">
 			<div style="margin-bottom: 20px">
 				pkid:
